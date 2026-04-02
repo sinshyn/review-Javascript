@@ -11,15 +11,31 @@
 // setInterval(function () {
 //   console.count(fullName);
 // }, 3000);
-var a = 1;
-var b = 2;
+// var a = 1;
+// var b = 2;
 
-var userName = "Sang";
-userName += " Sang";
-console.log(userName);
+// var userName = 'Sang \' Toan \' ';
+// userName += " Sang";
+// console.log(userName);
 
-if (a <= b) {
-  console.log("dieu kien dung");
-} else {
-  console.log("dieu kien sai");
+// if (a > b) {
+//   console.log("dieu kien dung");
+// } else {
+//   console.log("dieu kien sai")
+// }
+
+// var d = null;
+// var myObject = ["sang", 24, "web dev"];
+// myObject = 11n;
+
+// console.log(typeof myObject);
+// var a, b, c;
+// a = 1;
+// b = '1';
+// c = '' || 'NaN' || 'c';
+// console.log(c);
+/**/
+function showDialog() {
+  alert('notification')
 }
+showDialog();
