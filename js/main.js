@@ -630,7 +630,7 @@ const foreach = [1, 2, 3];
 
 /* every Kiểm tra TẤT CẢ phần tử có thỏa điều kiện không */
 const every = [1, 2, 3, 4];
-// console.log(every.every((n) => n === 1)); // true
+// console.log(every.every((n) => n === 1)); // false
 
 /* some Chỉ cần 1 phần tử đúng là true */
 const some = [1, 3, -5, 6];
@@ -774,8 +774,208 @@ var arra = [
   ["age", 18],
 ];
 // console.log(arrToObj(arra)); // { name: 'Sơn Đặng', age: 18 }
+// console.log(
+//   arra.map(function (n) {
+//     return n[0].includes("name");
+//   }),
+// );
 
+let title = ["ten", "sin", "name", "sang", "name"];
+// console.log(title.includes("name"));
 
-console.log(arra.map(function (n) {
-  return n[0].includes('name')
-}));
+/*Callback
+1. là 1 function
+2. được truyền qua đối số 
+3. được gọi lại trong phần đối số của hàm chính
+/được gọi lại trong hàm nhận đối số*/
+function myFunction(param) {
+  if (typeof param === "function") {
+    param("hello sang");
+  }
+}
+function myCallback(value) {
+  // console.log("Value: ", value);
+}
+myFunction(myCallback);
+
+/* bai tap */
+function sumCb(a, b) {
+  return a + b;
+}
+function subCb(a, b) {
+  return a - b;
+}
+function multiCb(a, b) {
+  return a * b;
+}
+function divCb(a, b) {
+  return a / b;
+}
+
+function caculate(a, b, cb) {
+  if (typeof cb === "function") {
+    return cb(a, b);
+  }
+}
+
+// Expected results
+// caculate(1, 2, sumCb) // Output: 3
+// caculate(1, 2, subCb) // Output: -1
+// caculate(1, 2, multiCb) // Output: 2
+// caculate(3, 1, divCb) // Output: 3
+
+Array.prototype.map2 = function (callback) {
+  let allarr = [],
+    arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    var result = callback(this[i]);
+    allarr.push(result);
+  }
+  return allarr;
+};
+
+let other = ["java", ".net", "note.js", "ruby"];
+let htmls = other.map2(function (cs) {
+  return `<h2>${cs}</h2>`;
+});
+// console.log(htmls);
+
+/* map() */
+Array.prototype.newMap = function (cb) {
+  let newArr = [],
+    arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    let result = cb(this[i], i);
+    newArr.push(result);
+  }
+  return newArr;
+};
+
+/* forEach() */
+Array.prototype.newForEach = function (cb) {
+  for (let i in this) {
+    if (this.hasOwnProperty(i)) {
+      cb(this[i], i, this);
+    }
+  }
+};
+
+/* every */
+Array.prototype.newEvery = function (cb) {
+  let arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    let result = cb(this[i], i, this);
+    if (!result) {
+      return false;
+    }
+  }
+  return true;
+};
+
+/* some */
+Array.prototype.newSome = function (cb) {
+  let arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    if (cb(this[i]) === true) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/* filter */
+Array.prototype.newFilter = function (cb) {
+  let newArr = [],
+    arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    if (cb(this[i]) === true) {
+      newArr.push(this[i]);
+    }
+  }
+  return newArr;
+};
+
+/* find */
+Array.prototype.newFind = function (cb) {
+  let arrLength = this.length;
+  for (let i = 0; i < arrLength; i++) {
+    if (cb(this[i]) === true) {
+      return this[i];
+    }
+  }
+  return undefined;
+};
+
+/* reduce */
+
+const newA = [1, 2, 5, 1];
+// newA.forEach((num) => console.log(num));
+// console.log(newA.newEvery((n) => n === 5));
+// console.log(newA.newFilter((n) => n < 5));
+// console.log(finds.newFind((n) => n > 1));
+
+const num = ["s", "a", "n", "g"];
+// console.log(Array.prototype);
+
+Array.prototype.myFilter = function (cb) {
+  let newArr = [],
+    arrLength = this.length;
+
+  for (let i = 0; i < arrLength; i++) {
+    let result = cb(this[i], i, this);
+    if (result === true) {
+      newArr.push(this[i]);
+    }
+  }
+  return newArr;
+};
+
+Array.prototype.newForEachs = function (cb) {
+  for (let i = 0; i < this.length; i++) {
+    if (i in this) {
+      cb(this[i], i, this);
+    }
+  }
+};
+
+/* some */
+Array.prototype.newSomes = function (cb) {
+  for (let i in this) {
+    if (this.hasOwnProperty(i)) {
+      let result = cb(this[i], i, this);
+      if (result === true) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+const athy = [1, 3, 3, 5];
+const asang = new Array(10);
+
+console.log(
+  athy.newEvery(function (number) {
+    return number % 2 !== 0;
+  }),
+); // Output: true
+
+// asang.newForEachs((n) => console.log(n));
+// asang.newSomes((n) => console.log(n));
+/**
+Expected results:
+
+const numbers = [1, 3, 3, 5];
+
+console.log(numbers.mySome(function (number) {
+    return number % 2 === 0;
+})); Output: false
+
+console.log(numbers.mySome(function (number, index) {
+    return index % 2 === 0;
+})); Output: true
+
+console.log(numbers.mySome(function (number, index, array) {
+    return array.length % 2 === 0;
+})); Output: true
+ */
